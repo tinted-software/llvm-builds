@@ -12,7 +12,6 @@ jobs:
         with:
           repository: "llvm/llvm-project"
           path: llvm-project 
-          token: ${{ secrets.GITHUB_AUTH_TOKEN }}
       - uses: seanmiddleditch/gha-setup-ninja@master
       - name: Configure LLVM
         run: |
