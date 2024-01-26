@@ -4,16 +4,17 @@ set(CMAKE_BUILD_TYPE MinSizeRel CACHE STRING "")
 set(CLANG_ENABLE_BOOTSTRAP ON CACHE BOOL "")
 set(CLANG_BOOTSTRAP_TARGETS
 	generate-profdata
-	stage2
-	stage2-clang
-	stage2-distribution
-	stage2-install
-	stage2-install-distribution
-	stage2-install-distribution-toolchain
-	stage2-check-all
-	stage2-check-llvm
-	stage2-check-clang
-	stage2-test-suite
+	stage3
+	stage3-clang
+	stage3-distribution
+	stage3-install
+	stage3-install-stripped
+	stage3-install-distribution
+	stage3-install-distribution-toolchain
+	stage3-check-all
+	stage3-check-llvm
+	stage3-check-clang
+	stage3-test-suite
 	CACHE STRING ""
 )
 
