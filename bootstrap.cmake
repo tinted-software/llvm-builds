@@ -3,28 +3,6 @@ set(CMAKE_BUILD_TYPE MinSizeRel CACHE STRING "")
 # Stage 1 Bootstrap Setup
 set(CLANG_ENABLE_BOOTSTRAP ON CACHE BOOL "")
 set(CLANG_BOOTSTRAP_TARGETS
-	clang
-	check-all
-	check-llvm
-	check-clang
-	test-suite
-	stage3
-	stage3-clang
-	stage3-check-all
-	stage3-check-llvm
-	stage3-check-clang
-	stage3-install
-	stage3-install-stripped
-	stage3-test-suite CACHE STRING "")
-
-# Stage 1 Options
-set(LLVM_ENABLE_PROJECTS "clang;lld" CACHE STRING "")
-set(LLVM_ENABLE_RUNTIMES "compiler-rt" CACHE STRING "")
-set(LLVM_TARGETS_TO_BUILD Native CACHE STRING "")
-
-# Stage 2 Bootstrap Setup
-set(BOOTSTRAP_CLANG_ENABLE_BOOTSTRAP ON CACHE STRING "")
-set(BOOTSTRAP_CLANG_BOOTSTRAP_TARGETS
 	generate-profdata
 	stage2
 	stage2-clang
@@ -36,10 +14,21 @@ set(BOOTSTRAP_CLANG_BOOTSTRAP_TARGETS
 	stage2-check-llvm
 	stage2-check-clang
 	stage2-test-suite
+	CACHE STRING ""
+)
+
+# Stage 1 Options
+set(LLVM_ENABLE_PROJECTS "clang;lld" CACHE STRING "")
+set(LLVM_ENABLE_RUNTIMES "compiler-rt" CACHE STRING "")
+set(LLVM_TARGETS_TO_BUILD Native CACHE STRING "")
+
+# Stage 2 Bootstrap Setup
+set(BOOTSTRAP_CLANG_ENABLE_BOOTSTRAP ON CACHE STRING "")
+set(BOOTSTRAP_CLANG_BOOTSTRAP_TARGETS
 	clang
-	check-all
-	check-llvm
-	check-clang
+  check-all
+  check-llvm
+  check-clang
 	CACHE STRING ""
 )
 
