@@ -1,0 +1,27 @@
+name: Build LLVM 
+on: 
+  workflow_dispatch:
+  schedule:
+    - cron: "0 13 * * 0"
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+        with:
+          repository: "llvm/llvm-project"
+          path: llvm-project 
+          token: ${{ secrets.GITHUB_AUTH_TOKEN }}
+    - uses: seanmiddleditch/gha-setup-ninja@master
+    - name: Configure LLVM
+      run: |
+        chmod +x build.sh
+        ./build.sh
+    - name: "Upload Artifacts"
+    uses: actions/upload-artifact@v4
+    with:
+      name: llvm-x86_64-unknown-linux-gnu
+      path: install
+      retention-days: 28
+
