@@ -2,11 +2,27 @@ name: Build LLVM
 on: 
   workflow_dispatch:
   schedule:
-    - cron: "0 13 * * 0"
+    - cron: "0 13 * * *"
 jobs:
   build:
     runs-on: ubuntu-22.04
     steps:
+      - name: Maximize disk space
+        uses: theoparis/maximize-build-space@master
+        with:
+          root-reserve-mb: 1024
+          swap-size-mb: 1024
+          remove-dotnet: 'true'
+          remove-docker-images: 'true'
+          remove-android: 'true'
+          remove-haskell: 'true'
+          remove-codeql: 'true'
+      - name: Check disk spaceo
+        run: |
+          echo "Free space:"
+          df -h
+          echo "Mounts:"
+          mount
       - name: Check out repository code
         uses: actions/checkout@v4
       - name: Check out LLVM 
@@ -19,10 +35,17 @@ jobs:
         run: |
           chmod +x build.sh
           ./build.sh
-      - name: "Upload Artifacts"
-        uses: actions/upload-artifact@v4
+      - name: Generate release tag
+        id: generate_release_tag
+        uses: amitsingh-007/next-release-tag@v5.0.0
         with:
-          name: llvm-x86_64-unknown-linux-gnu
-          path: install
-          retention-days: 28
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          tag_prefix: 'v'
+          tag_template: 'yyyy.mm.dd.i'
+      - name: Create Release
+        uses: ncipollo/release-action@v1
+        with:
+          tag: ${{ steps.generate_release_tag.outputs.next_release_tag }}
+          generateReleaseNotes: true
+          artifacts: "install"
 
