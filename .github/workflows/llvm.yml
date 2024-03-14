@@ -30,22 +30,21 @@ jobs:
         with:
           repository: "llvm/llvm-project"
           path: llvm-project 
-      - uses: seanmiddleditch/gha-setup-ninja@master
+      - run: sudo apt update && sudo apt install ninja-build zstd libarchive-tools ccache
       - name: Configure LLVM
         run: |
           chmod +x build.sh
           ./build.sh
-      - name: Generate release tag
-        id: generate_release_tag
-        uses: amitsingh-007/next-release-tag@v5.0.0
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          tag_prefix: 'v'
-          tag_template: 'yyyy.mm.dd.i'
       - name: Create Release
-        uses: ncipollo/release-action@v1
+      - uses: google-github-actions/release-please-action@v4
         with:
-          tag: ${{ steps.generate_release_tag.outputs.next_release_tag }}
-          generateReleaseNotes: true
-          artifacts: "install"
-
+          token: ${{ secrets.GITHUB_TOKEN }}
+          release-type: simple
+      - name: Compress artifactss
+        run: |
+          bsdtar --zstd --options "zstd:threads=4,zstd:compression-level=22" -cvf llvm.tar.zst -C install .
+      - name: Upload Release Artifact
+        if: ${{ steps.release.outputs.release_created }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh release upload ${{ steps.release.outputs.tag_name }} ./llvm.tar.zst
