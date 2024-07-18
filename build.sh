@@ -6,6 +6,7 @@ cmake -B build -G Ninja \
 	-DBUILD_SHARED_LIBS=OFF \
 	-DCMAKE_INSTALL_PREFIX=$PWD/install \
 	-DCMAKE_BUILD_TYPE=MinSizeRel \
+	-DPython3_EXECUTABLE=/usr/local/bin/python3.14 \
 	-C $PWD/theos.cmake
 ninja -C build install/strip
 
