@@ -1,5 +1,5 @@
 # TODO: re-enable libclc once 'Target "clang" is not an executable or library.' is solved
-set(LLVM_ENABLE_PROJECTS "mlir;bolt;polly;clang;lld;clang-tools-extra;lldb" CACHE STRING "")
+set(LLVM_ENABLE_PROJECTS "mlir;libclc;bolt;polly;clang;lld;clang-tools-extra;lldb" CACHE STRING "")
 set(LLVM_RUNTIME_TARGETS "x86_64-unknown-linux-gnu" CACHE STRING "")
 set(LLVM_EXPERIMENTAL_TARGETS_TO_BUILD "DirectX" CACHE STRING "")
 set(LLVM_TOOL_REMARKS_SHLIB_BUILD OFF CACHE BOOL "")
