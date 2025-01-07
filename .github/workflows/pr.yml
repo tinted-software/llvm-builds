@@ -23,9 +23,9 @@ jobs:
           echo "Mounts:"
           mount
       - name: Check out repository code
-        uses: actions/checkout@v4
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
       - name: Check out LLVM 
-        uses: actions/checkout@v4
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
         with:
           repository: "llvm/llvm-project"
           path: llvm-project 
@@ -34,7 +34,7 @@ jobs:
         run: |
           chmod +x build.sh
           ./build.sh
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@6f51ac03b9356f520e9adb1b1b7802705f340c2b # v4
         name: Upload Tempoary Artifacts
         with:
           name: llvm-pr
